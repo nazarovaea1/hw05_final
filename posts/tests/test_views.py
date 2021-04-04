@@ -150,7 +150,7 @@ class PostPagesTests(TestCase):
         self.authorized_client.get(reverse(
             'profile_follow', kwargs={'username': 'test_author'}))
         self.author_post = Post.objects.create(
-            text='Пост для подписчиков',
+            text='Пост для подписчиков от автора1',
             author=self.test_author,
         )
         response = self.authorized_client.get(reverse(
@@ -158,11 +158,7 @@ class PostPagesTests(TestCase):
         self.assertContains(response, self.author_post.text)
         response1 = self.authorized_client2.get(reverse(
             'follow_index'))
-        # # self.assertNotContains(response1, self.author_post.text)
-        response_page = list(response1.context.get('page').object_list)
-        self.assertFalse(Follow.objects.filter(
-            user=self.test_user2, author=self.test_author).exists())
-        self.assertFalse(response_page)
+        self.assertFalse(response1.context['page'])
 
 
 class PaginatorViewsTest(TestCase):
