@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<main role="main" class="container">
+  <div class="row">
+    {% include "include/bio_column.html" %}
+    <div class="col-md-9">
+      {% include "include/post_item.html" with post=post %}
+      {% include "new_comment.html" %}
+      {% include "comments.html" %}
+    </div>
+  </div>
+</main>
+{% endblock %}
