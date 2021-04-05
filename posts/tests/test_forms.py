@@ -7,8 +7,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from posts.forms import PostForm
-from posts.models import Group, Post
+from posts.forms import CommentForm, PostForm
+from posts.models import Comment, Group, Post
 
 User = get_user_model()
 
@@ -92,3 +92,37 @@ class PostFormTests(TestCase):
         self.assertTrue(Post.objects.filter(
             group=form_data['group'],
             text=form_data['text']).exists())
+
+
+class CommentFormTests(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.test_user = User.objects.create_user(username='test_user')
+        cls.authorized_client = Client()
+        cls.authorized_client.force_login(cls.test_user)
+        cls.form = CommentForm()
+        cls.post = Post.objects.create(
+            text='Тестовый текст поста',
+            author=cls.test_user,)
+
+    def test_create_comment(self):
+        """Валидная форма создает комментарий в Post."""
+        comments_count = Comment.objects.count()
+
+        form_data = {
+            'text': 'Тестовый текст комментария',
+        }
+        response = self.authorized_client.post(
+            reverse('add_comment', kwargs={
+                'username': CommentFormTests.test_user.username,
+                'post_id': CommentFormTests.post.id}),
+            data=form_data,
+            follow=True
+        )
+        self.assertRedirects(response, reverse('post', kwargs={
+            'username': CommentFormTests.test_user.username,
+            'post_id': CommentFormTests.post.id}))
+        self.assertEqual(Comment.objects.count(), comments_count + 1)
+        self.assertTrue(Comment.objects.filter(
+            text=form_data['text'],).exists())

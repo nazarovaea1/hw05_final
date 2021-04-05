@@ -8,7 +8,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from posts.models import Follow, Group, Post
+from posts.models import Comment, Follow, Group, Post
 
 User = get_user_model()
 
@@ -53,6 +53,10 @@ class PostPagesTests(TestCase):
             group=cls.group,
             image=cls.uploaded,
         )
+        # cls.comment = Comment.objects.create(
+        #     text='Тестовый текст поста',
+        #     author=cls.test_author,
+        # )
 
     @classmethod
     def tearDownClass(cls):
@@ -73,6 +77,20 @@ class PostPagesTests(TestCase):
             'text': forms.fields.CharField,
             'group': forms.fields.ChoiceField,
             'image': forms.fields.ImageField
+        }
+
+        for value, expected in form_fields.items():
+            with self.subTest(value=value):
+                form_field = response.context['form'].fields[value]
+                self.assertIsInstance(form_field, expected)
+
+    def test_add_comment_shows_correct_context(self):
+        """Шаблон new_comment сформирован с правильным контекстом."""
+        response = self.authorized_client.get(reverse('add_comment', kwargs={
+            'username': PostPagesTests.test_user.username,
+            'post_id': PostPagesTests.post.id}))
+        form_fields = {
+            'text': forms.fields.CharField,
         }
 
         for value, expected in form_fields.items():

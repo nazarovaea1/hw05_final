@@ -1,17 +1,15 @@
 import textwrap
 
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
-from django.utils.translation import gettext_lazy
 
 User = get_user_model()
 
 
 class Group(models.Model):
-    title = models.CharField(max_length=200, verbose_name='Группа',
-                             help_text='Выберите группу',)
+    title = models.CharField(max_length=200, verbose_name="Группа",
+                             help_text="Выберите группу",)
     slug = models.SlugField(max_length=100,
                             unique=True, blank=True,)
     description = models.TextField()
@@ -26,14 +24,14 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    text = models.TextField(verbose_name='Текст записи',
-                            help_text='Введите текст поста',)
+    text = models.TextField(verbose_name="Текст записи",
+                            help_text="Введите текст поста",)
     pub_date = models.DateTimeField("date published", auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name="posts")
     group = models.ForeignKey(Group, models.SET_NULL, blank=True, null=True,
                               related_name="posts",)
-    image = models.ImageField(upload_to='posts/', blank=True, null=True)
+    image = models.ImageField(upload_to="posts/", blank=True, null=True)
 
     class Meta:
         ordering = ("-pub_date",)
@@ -47,9 +45,15 @@ class Comment(models.Model):
                              related_name="comments")
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name="comments")
-    text = models.TextField(verbose_name='Текст комментария',
-                            help_text='Введите ваш комментарий',)
+    text = models.TextField(verbose_name="Текст комментария",
+                            help_text="Введите ваш комментарий",)
     created = models.DateTimeField("datetime published", auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created",)
+
+    def __str__(self):
+        return f"{self.author} commented: {self.text}"
 
 
 class Follow(models.Model):
@@ -61,15 +65,10 @@ class Follow(models.Model):
                                    auto_now_add=True, db_index=True)
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['user', 'author'],
-                                    name='User cant follow someone twice')]
-        ordering = ["-created"]
+        constraints = (
+            models.UniqueConstraint(fields=("user", "author",),
+                                    name="User cant follow someone twice"),)
+        ordering = ("-created",)
 
     def __str__(self):
-        f"{self.user} follows {self.author}"
-
-    def clean(self):
-        if self.user == self.author:
-            raise ValidationError({'user_not_author': gettext_lazy(
-                'Пользователь не может подписаться сам на себя.')})
+        return f"{self.user} follows {self.author}"
