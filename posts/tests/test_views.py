@@ -53,10 +53,11 @@ class PostPagesTests(TestCase):
             group=cls.group,
             image=cls.uploaded,
         )
-        # cls.comment = Comment.objects.create(
-        #     text='Тестовый текст поста',
-        #     author=cls.test_author,
-        # )
+        cls.comment = Comment.objects.create(
+            text='Тестовый текст поста',
+            author=cls.test_author,
+            post_id=cls.post.id,
+        )
 
     @classmethod
     def tearDownClass(cls):
@@ -131,7 +132,9 @@ class PostPagesTests(TestCase):
                 'post_id': PostPagesTests.post.id})
         )
         first_object = response.context["post"]
+        comments = response.context["comments"]
         return (self.get_post_and_check(first_object))
+        return (self.assertEqual(comments, PostPagesTests.comment))
 
     def test_group_post_appear_twice(self):
         """При создании поста с указанием группы, пост появляется на главной
