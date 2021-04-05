@@ -17,7 +17,7 @@
       <div class="btn-group ">
         {% if post.comments.exists %}
         <div>
-          Комментариев: {{ post.comments.count }}
+          <a class="btn btn-sm text-muted"> Комментариев: {{ post.comments.count }}</a>
         </div>
         {% endif %}
 
@@ -28,7 +28,7 @@
         {% endif %}
         {% endif %}
       </div>
-      <small class="text-muted">{{ post.pub_date|date:"d M Y" }}</small>
+      <small class="text-muted">{{ post.pub_date }}</small>
     </div>
   </div>
 </div>
