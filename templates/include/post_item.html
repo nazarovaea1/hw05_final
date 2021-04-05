@@ -17,14 +17,16 @@
       <div class="btn-group ">
         {% if post.comments.exists %}
         <div>
-          <a class="btn btn-sm text-muted"> Комментариев: {{ post.comments.count }}</a>
+          <a class="btn btn-sm text-muted" href="{% url 'post' post.author.username post.id%}" role="button"> Комментариев: {{ post.comments.count }}</a>
         </div>
         {% endif %}
 
-        <a class="btn btn-sm text-muted" href="{% url 'post' post.author.username post.id%}" role="button">Добавить комментарий</a>
+        {% url 'post' post.author.username post.id as the_url %}
+        {% if request.get_full_path == the_url %}
         {% if user.is_authenticated %}
         {% if user.username == post.author.username %}
         <a class="btn btn-sm text-muted" href="{% url 'post_edit' post.author.username post.id%}" role="button">Редактировать</a>
+        {% endif %}
         {% endif %}
         {% endif %}
       </div>

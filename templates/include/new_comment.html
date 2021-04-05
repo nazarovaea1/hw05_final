@@ -1,4 +1,4 @@
-{% include "include/user_filters.html" %}
+{% load user_filters %}
 
 {% if user.is_authenticated %}
 <div class="card my-4">
@@ -7,7 +7,7 @@
     <h5 class="card-header">Добавить комментарий:</h5>
     <div class="card-body">
       <div class="form-group">
-        {{ form.text }}
+        {{ form.text|addclass:"form-control"}}
       </div>
       <button type="submit" class="btn btn-primary">Отправить</button>
     </div>

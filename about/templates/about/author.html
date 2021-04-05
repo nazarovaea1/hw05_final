@@ -5,7 +5,6 @@
 {% load user_filters %}
 <main role="main" class="container">
   <div class="row">
-    <!-- Левый вспомогательный блок -->
     <div class="col-md-3 mb-3 mt-1">
       <div class="card">
         <div class="card-body">
@@ -24,26 +23,21 @@
         </div>
       </div>
     </div>
-    <!-- Тело страницы -->
     <div class="col-md-9">
       <div class="card-body">
-        <div class="card-text">
+        <div class="card-text text-center">
           <p>Обучаюсь по программе Бэкенд-разработки. Мой <a href="https://github.com/nazarovaea1">Github</a>,
             <a href="https://hh.ru/resume/3ab7d60aff0861115e0039ed1f696d36787672">резюме на HH</a>.
           </p>
         </div>
         {% load static %}
-        <div class="media">
-          {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
-          <img class="card-img" src="{% static 'dog.jpeg' %}" alt="Собака" title="Собака">
-          {% endthumbnail %}
-          <div class="media-body">
-            <h5 class="mt-0">Некий текст</h5>
-
-          </div>
+        <div class="text-center">
+          <img class="card-img" src="{% static '/images/dog.jpeg' %}" width="500" height="500" alt="Собака">
+          <h5 class="mt-0">В работе над проектом помогал вышележащий кусок меха.</h5>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </main>
 {% endblock %}
