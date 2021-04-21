@@ -46,7 +46,8 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name="comments")
     text = models.TextField(verbose_name="Текст комментария",
-                            help_text="Введите ваш комментарий",)
+                            help_text="Введите ваш комментарий",
+                            blank=False, null=False)
     created = models.DateTimeField("datetime published", auto_now_add=True)
 
     class Meta:

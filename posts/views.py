@@ -118,6 +118,7 @@ def add_comment(request, username, post_id):
         form.save()
         return redirect("post", username=post.author.username,
                         post_id=post_id)
+    # return render(request, "post.html", {"form": form, })
     return render(request, 'post.html', {"form": form,
                                          "post": post,
                                          "author": post.author,

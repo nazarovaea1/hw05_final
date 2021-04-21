@@ -10,4 +10,6 @@
     <p>{{ item.text | linebreaksbr }}</p>
   </div>
 </div>
+{% empty %}
+<p>Комментариев пока нет :(</p>
 {% endfor %}
