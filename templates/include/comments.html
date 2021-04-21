@@ -8,6 +8,13 @@
       </a>
     </h5>
     <p>{{ item.text | linebreaksbr }}</p>
+    <div class="d-flex justify-content-between align-items-center">
+      {% if user.is_authenticated %}
+      {% if user.username == item.author.username %}
+      <a class="btn btn-sm text-muted" href="{% url 'comment_delete' post.author.username post.id item.id %}" role="button">Удалить комментарий </a>
+      {% endif %}
+      {% endif %}
+    </div>
   </div>
 </div>
 {% empty %}
