@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<main role="main" class="container">
+  <div class="row">
+    {% include "include/bio_column.html" %}
+
+    <div class="col-md-9">
+      {{ profile.user.username }}
+    </div>
+  </div>
+</main>
+{% endblock %}

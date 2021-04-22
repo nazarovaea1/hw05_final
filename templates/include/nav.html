@@ -1,14 +1,47 @@
-<nav class="navbar navbar-light" style="background-color: #F2FFA5;">
-  <a class="navbar-brand mb-1 h1 ml-1;" href="/"> <span style="color:#FF7D75">Fi</span>ji</a>
-  <nav class="my-2 my-md-0 mr-md-3">
-    {% if user.is_authenticated %}
-    <a class="text-dark">Пользователь: {{ user.username }}.</a>
-    <a class="p-2 text-dark" href="{% url 'new_post' %}">Новая запись</a>
-    <a class="p-2 text-dark" href="{% url 'password_change' %}">Изменить пароль</a>
-    <a class="p-2 text-dark" href="{% url 'logout' %}">Выйти</a>
-    {% else %}
-    <a class="p-2 text-dark" href="{% url 'login' %}">Войти</a> |
-    <a class="p-2 text-dark" href="{% url 'signup' %}">Регистрация</a>
-    {% endif %}
-  </nav>
-</nav>
+{% load static %}
+<div class="container">
+  <header class="blog-header py-3">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <div class="col-4 pt-1">
+        <a class="text-muted" href="/">Home</a>
+      </div>
+      <div class="col-4 text-center">
+        <a class="blog-header-logo text-dark" href="/"><span style="color:#000000;font:80pt bold NEW YORK;">FIJI</span></a>
+      </div>
+      <div class="col-4 d-flex justify-content-end align-items-center">
+        <a class="text-muted" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false">
+            <title>Search</title>
+            <circle cx="10.5" cy="10.5" r="7.5"></circle>
+            <path d="M21 21l-5.2-5.2"></path>
+          </svg>
+        </a>
+        {% if user.is_authenticated %}
+        <a class="text-dark">Пользователь: {{ user.username }}.</a>
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'new_post' %}">Новая запись</a>
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'password_change' %}">Изменить пароль</a>
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'logout' %}">Выйти</a>
+        {% else %}
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'login' %}">Войти</a>
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'signup' %}">Регистрация</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+  <div class="nav-scroller py-1 mb-2">
+    <nav class="nav d-flex justify-content-between">
+      <a class="p-2 text-muted" href="/group/fiji/">Fiji</a>
+      <a class="p-2 text-muted" href="/group/yandex/">Yandex</a>
+      <a class="p-2 text-muted" href="/group/technology/">Technology</a>
+      <a class="p-2 text-muted" href="/group/design/">Design</a>
+      <a class="p-2 text-muted" href="/group/culture/">Culture</a>
+      <a class="p-2 text-muted" href="/group/business/">Business</a>
+      <a class="p-2 text-muted" href="/group/politics/">Politics</a>
+      <a class="p-2 text-muted" href="/group/opinion/">Opinion</a>
+      <a class="p-2 text-muted" href="/group/science/">Science</a>
+      <a class="p-2 text-muted" href="/group/health/">Health</a>
+      <a class="p-2 text-muted" href="/group/style/">Style</a>
+      <a class="p-2 text-muted" href="/group/travel/">Travel</a>
+    </nav>
+  </div>
+</div>

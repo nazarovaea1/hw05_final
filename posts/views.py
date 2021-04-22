@@ -125,7 +125,6 @@ def add_comment(request, username, post_id):
         form.save()
         return redirect("post", username=post.author.username,
                         post_id=post_id)
-    # return render(request, "post.html", {"form": form, })
     return render(request, 'post.html', {"form": form,
                                          "post": post,
                                          "author": post.author,
@@ -172,6 +171,9 @@ def profile_unfollow(request, username):
     if Follow.objects.filter(user=current_user, author=author).exists():
         Follow.objects.filter(user=current_user, author=author).delete()
     return redirect("profile", username=author.username)
+
+
+
 
 
 def page_not_found(request, exception):
