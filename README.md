@@ -1,8 +1,8 @@
-# hw05_final
-Социальная сеть Fiji для публикации личных дневников
 
-- После регистрации пользователь получает свой профайл. 
-- Пользователи могут заходить на чужие страницы, подписываться на авторов и комментировать их записи.
-- Записи можно публиковать в тематических сообществах.
+Social network Fiji for personal publications 
+
+- User gets his profile after registration. 
+- Users can visit pages of other users, subscribe to other authors and comment their publications.
+- You can make your publications in themed groupes.
 
 Welcome! http://nazarovaea1.pythonanywhere.com/
